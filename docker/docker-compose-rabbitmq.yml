@@ -1,0 +1,22 @@
+# typical docker-compose file for rabbitmq
+version: '3'
+
+networks:
+    net1:
+
+services:
+    rabbitmq:
+        image: rabbitmq:3.7-management-alpine
+        container_name: rabbitmq-1
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: admin
+        volumes:
+            - ./data/rabbitmq-1:/var/lib/rabbitmq
+        networks:
+            net1:
+                aliases:
+                    - rabbitmq-1

@@ -1,0 +1,55 @@
+# typical docker-compose file for cassandra
+version: '3'
+
+networks:
+    net1:
+
+services:
+    cassandra-1:
+        image: cassandra:3.11
+        container_name: cassandra-1
+        ports:
+            - 7000:7000
+            - 9042:9042
+        volumes:
+            - ./cassandra-data/cassandra-1:/var/lib/cassandra
+        environment:
+            CASSANDRA_CLUSTER_NAME: TEST
+            HEAP_NEWSIZE: 50M
+            MAX_HEAP_SIZE: 512M
+        networks:
+            net1:
+                aliases:
+                    - cassandra-1
+#    cassandra-2:
+#        image: cassandra:3.11
+#        container_name: cassandra-2
+#        volumes:
+#            - ./cassandra-data/cassandra-2:/var/lib/cassandra
+#        environment:
+#            CASSANDRA_CLUSTER_NAME: TEST
+#            CASSANDRA_SEEDS: cassandra-1
+#            HEAP_NEWSIZE: 50M
+#            MAX_HEAP_SIZE: 512M
+#        depends_on:
+#            - cassandra-1
+#        networks:
+#            net1:
+#                aliases:
+#                    - cassandra-2
+#    app:
+#        image: <spring boot image>
+#        container_name: app
+#        environment:
+#            TZ: <Your timezone: e.g. Asia/Shanghai>
+#            SPRING_PROFILES_ACTIVE: prod
+#        depends_on:
+#        ports:
+#            - 8080:8080
+#        volumes:
+#            - /var/www/<your app name>/log:/app/log
+#            - /var/www/<your app name>/config:/app/config
+#        networks:
+#            net1:
+#                aliases:
+#                    - app

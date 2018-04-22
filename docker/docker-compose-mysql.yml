@@ -1,0 +1,44 @@
+# typical docker-compose file for mysql
+version: '3'
+
+networks:
+    net1:
+
+services:
+    mysql:
+        image: mysql:5.7
+        container_name: mysql
+        restart: always
+        command: >
+          mysqld
+          --character-set-server=utf8mb4
+          --character_set_filesystem=utf8mb4
+          --collation-server=utf8mb4_unicode_ci
+          --init-connect='SET NAMES utf8mb4;'
+          --skip-character-set-client-handshake
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            # MYSQL_DATABASE: <Your db name>
+            # MYSQL_USER: <optional>
+            # MYSQL_PASSWORD: <optional>
+        volumes:
+            - ./data:/var/lib/mysql
+        # ports:
+        #     - 3306:3306
+        networks:
+            net1:
+                aliases:
+                    - mysql
+    # phpmyadmin:
+    #     image: phpmyadmin/phpmyadmin
+    #     container_name: phpmyadmin
+    #     environment:
+    #         PMA_HOST: mysql
+    #     ports:
+    #         - 8090:80
+    #     depends_on:
+    #         - mysql
+    #     networks:
+    #         net1:
+    #             aliases:
+    #                 - phpmyadmin
