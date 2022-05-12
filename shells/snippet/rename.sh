@@ -16,3 +16,6 @@ rename -n 's/Google(.*)/LinkedIn$1/' *.kt
 # nested
 # https://stackoverflow.com/questions/16541582/find-multiple-files-and-rename-them-in-linux
 find . -name "old*.*" -exec rename "s/old/new/" '{}' \;
+
+# rename dir
+find . -depth -type d -name "old" -exec rename "s/old/new/" '{}' \;
